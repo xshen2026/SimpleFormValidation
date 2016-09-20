@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="FormValidation">
+
+<head>
+	<title> FormValidation Demo</title>
+
+ 	<!-- CSS -->
+    <link rel="stylesheet" href="bootstrap.min.css" />
+    <style>
+        body     { padding-top:30px; }
+    </style>
+
+	<!-- JS -->
+	<script type="text/javascript" src="angular.min.js"></script>
+	<script type="text/javascript" src="app.js"></script>
+
+    <!-- Google Maps JavaScript API -->
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=places"></script>
+    
+    <!-- vsGoogleAutocomplete -->
+    <script src="vs-google-autocomplete.js"></script>
+</head>
+
+<body ng-controller="FormController">
+<div class="container">
+	<div class="page-header"><h1> Your Information</h1></div>
+	<h3>Just fill out the form below to save account information</h3><br>
+	<form name="MyForm" ng-submit="submitForm(MyForm.$valid)" novalidate>
+
+		
+
+		<!-- First Name -->
+        <div class="form-group"	>
+		<label>First Name</label>
+		<input type="text" name="FirstName" class="form-control" ng-model="FirstName" placeholder="Harry" required check-name>
+		<span style="color:red" ng-show="MyForm.FirstName.$dirty && MyForm.FirstName.$invalid">
+			<span ng-show="MyForm.FirstName.$error.required">First Name is required.</span>
+			<span ng-show="MyForm.FirstName.$invalid">First Name should caontain at least one alphabet, and can only contain alphabets,dots, and spaces.</span>
+		</span>
+		</div>
+
+		<!-- Last Name -->
+		<div class="form-group"	>
+		<label>Last Name</label>
+		<input type="text" name="LastName" class="form-control" ng-model="LastName" placeholder="Potter" required check-name>
+		<span style="color:red" ng-show="MyForm.LastName.$dirty && MyForm.LastName.$invalid">
+			<span ng-show="MyForm.LastName.$invalid">Last Name is required.</span>
+			<span ng-show="MyForm.LastName.$invalid">Last Name should caontain at least one alphabet, and can only contain alphabets,dots, and spaces.</span>
+		</span>
+		</div>
+
+		<!-- UserName -->
+		<!-- Only one special char (._-) allowed and it must not be at the extremas of the string
+		The first character cannot be a number
+		All the other characters allowed are letters and numbers
+		The total length should be between 3 and 20 chars -->
+		<div class="form-group"	>
+		<label>UserName</label>
+		<input type="text" name="UserName" class="form-control" ng-model="UserName" placeholder="Harry" required check-user>
+		<span class="help-block">
+			Only one special char (._-) allowed and it must not be at the extremas of the string.<br>
+			The first character cannot be a number.<br>
+			All the other characters allowed are letters and numbers.<br>
+			The total length should be between 3 and 20 chars</span>
+		<span style="color:red" ng-show="MyForm.UserName.$dirty && MyForm.UserName.$invalid">
+			<span ng-show="MyForm.UserName.$error.required">User Name is required.</span>
+			<span ng-show="MyForm.UserName.$invalid">First Name should caontain at least one alphabet, and can only contain alphabets,dots, and spaces.</span>
+		</span>
+		</div>
+
+		
+		
+		<!-- Date of Birth -->
+		<div class="form-group"	>
+		<label>Date of Birth</label>
+		<input type="date" name="DOB" class="form-control" ng-model="DOB" required>
+		<span style="color:red" ng-show="MyForm.DOB.$dirty && MyForm.DOB.$invalid">
+		<span ng-show="MyForm.DOB.$invalid">Re-enter your date of birth.</span>
+		</div>
+		
+		<!-- Email -->
+		<div class="form-group"	>
+		<label>Email Address</label>
+		<input type="email" name="Email" class="form-control" ng-model="Email" placeholder="Harry@Hogwarts.com" required>
+		<span style="color:red" ng-show="MyForm.Email.$dirty && MyForm.Email.$invalid">
+			<span ng-show="MyForm.Email.$invalid">The general format of an email address is local-part@domain, and a specific example is jsmith@example.com</span>
+		</span>
+		</div>
+
+		<!-- Re-enter Email -->
+		<div class="form-group"	>
+		<label>Re-enter Email Address</label>
+		<input type="email" name="Email" class="form-control" ng-model="Email-Re" placeholder="Harry@Hogwarts.com" required>
+		
+		</div>
+
+		
+		<!-- Address searching and parsing-->
+		<h3> Address Auto Complete</h3>
+		 <div class="form-group">
+		 <label> Enter the address to search</label>
+		 <input vs-google-autocomplete
+                ng-model="address.name" 
+
+                vs-street-number="address.components.streetNumber"
+                vs-street="address.components.street"
+                vs-city="address.components.city"
+                vs-state="address.components.state"
+                vs-country="address.components.country"
+                vs-post-code="address.components.postCode"
+
+                type="text" 
+                name="address"
+                id="address"
+                class="form-control" 
+                placeholder="Hogwarts School of Witchcraft and Wizardry ">
+        </div>	
+
+        <!-- Address Auto-Fill -->
+       
+
+		<div class="form-group">
+
+		  <span class="help-block"><b>Street: </b>{{address.components.streetNumber}} {{address.components.street}}</span>
+          <span class="help-block"><b>City: </b>{{address.components.city}}</span>
+          <span class="help-block"><b>State: </b>{{address.components.state}}</span>
+          <span class="help-block"><b>Country: </b>{{address.components.country}}</span>
+          <span class="help-block"><b>Zipcode: </b>{{address.components.postCode}}</span>
+        </div>
+
+
+		<!-- Address Manually-->
+
+		<h3> Address Manual Input</h3>
+		 <span class="help-block">Validation needed</span>
+
+		<div class="form-group">
+		<label>Line 1 (Street Number and Street Name)</label>
+		<input type="text" name="Line1" class="form-control" ng-model="Line1" placeholder="4 Privet Drive" required>
+		<span style="color:red" ng-show="MyForm.Line1.$dirty && MyForm.Line1.$invalid">
+			<span ng-show="MyForm.Line1.$error.required">An address is required.<br></span>
+		</span>
+		
+		<label>Line 2 (APT Number)</label>
+		<input type="text" name="Line2" class="form-control" ng-model="Line2">
+		
+		<label>City</label>
+		<input type="text" name="City" class="form-control" ng-model="City" required check-city>
+		<span style="color:red" ng-show="MyForm.City.$dirty && MyForm.City.$invalid">
+			<span ng-show="MyForm.City.$error.required">A city is required.<br></span>
+			<span ng-show="MyForm.City.$invalid">City name can only be alphabets.<br></span>
+		</span>		
+		
+		<label>State</label>
+		<select class="form-control" ng-model="statessss" ng-options="item for item in states"></select>
+		
+		<label>Zip Code</label>
+		<input type="text" class="form-control" name="ZipCode" ng-model="ZipCode" required check-zip>
+		<span style="color:Red" ng-show="MyForm.ZipCode.$dirty && MyForm.ZipCode.$invalid">
+			<span ng-show="MyForm.ZipCode.$invalid">Zip code should be 5 digits(xxxx) or 5 digits-4 digits(xxxxx-xxxx)</span>
+		</span>
+		</div>
+
+		<!-- Phone Number -->
+		<div class="form-group">
+		<label>Phone Number</label>
+		<input type="text" class="form-control" name="PhoneNumber" ng-model="PhoneNumber" required check-phone>
+		<span style="color:Red" ng-show="MyForm.PhoneNumber.$dirty && MyForm.PhoneNumber.$invalid">
+			<span ng-show="MyForm.PhoneNumber.$invalid">Phone number should be 10 digits and can only be numbers.</span>
+		</span>
+		</div>
+
+		<!-- <p>The input's valid state is:</p>
+        <h1>{{MyForm.FirstName.$valid}}</h1> -->
+
+        <button type="submit" class="btn btn-primary" ng-disabled="MyForm.$invalid">Submit</button>
+        <br><br><br>
+
+	</form>
+
+</body>
