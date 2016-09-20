@@ -64,7 +64,7 @@
 			The total length should be between 3 and 20 chars</span>
 		<span style="color:red" ng-show="MyForm.UserName.$dirty && MyForm.UserName.$invalid">
 			<span ng-show="MyForm.UserName.$error.required">User Name is required.</span>
-			<span ng-show="MyForm.UserName.$invalid">First Name should caontain at least one alphabet, and can only contain alphabets,dots, and spaces.</span>
+			<span ng-show="MyForm.UserName.$invalid">UserName Invalid.</span>
 		</span>
 		</div>
 
@@ -88,11 +88,14 @@
 		</div>
 
 		<!-- Re-enter Email -->
-		<div class="form-group"	>
-		<label>Re-enter Email Address</label>
-		<input type="email" name="Email" class="form-control" ng-model="Email-Re" placeholder="Harry@Hogwarts.com" required>
-		
-		</div>
+		<div class="form-group">
+            <label>Confirm Email Address</label>
+            <input type="email" name="email2" class="form-control" 
+                   ng-model="confirmEmail" 
+                   required compare-to="Email" />
+           
+			<span style="color:red" ng-show="MyForm.email2.$dirty && MyForm.email2.$invalid">Must match the previous entry</span>
+        </div>
 
 		
 		<!-- Address searching and parsing-->
